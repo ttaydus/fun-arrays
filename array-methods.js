@@ -1,14 +1,41 @@
 var dataset = require('./dataset.json');
 
+const bankBalanceData = dataset.bankBalances;
+
+
 /*
   create an array with accounts from bankBalances that are
   greater than 100000
   assign the resulting new array to `hundredThousandairs`
 */
-var hundredThousandairs = null;
+
+
+//var hundredThousandairs = null;
+
+const hundredThousandairs = bankBalanceData.filter((item,index,array) => {
+  //console.log('item:',item);
+  //console.log('index:',index);
+  return item.amount > 100000;
+});
+
+
+ 
+
 
 // set sumOfBankBalances to be the sum of all value held at `amount` for each bank object
-var sumOfBankBalances = null;
+
+
+
+//const sumOfBankBalances = null;
+
+var newArr = bankBalanceData.map((item) => {
+  return parseInt(item.amount);
+});
+
+const sumOfBankBalances = newArr.reduce((prev, curr) => {
+  return prev + curr;
+});
+
 
 /*
   from each of the following states:
@@ -21,7 +48,20 @@ var sumOfBankBalances = null;
   take each `amount` and add 18.9% interest to it rounded to the nearest dollar 
   and then sum it all up into one value saved to `sumOfInterests`
  */
+
+
 var sumOfInterests = null;
+
+const subSetStates = bankBalanceData.filter((item) => {
+  if(bankBalanceData.state === 'WI' ||
+  bankBalanceData.state === 'IL' ||
+  bankBalanceData.state === 'WY' ||
+  bankBalanceData.state === 'OH' ||
+  bankBalanceData.state === 'GA' ||
+  bankBalanceData.state === 'DE'){
+    return true;
+  }
+}
 
 /*
   aggregate the sum of bankBalance amounts
