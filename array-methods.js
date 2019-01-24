@@ -99,12 +99,6 @@ const sumOfInterests = isolateAmountInt.reduce(function(total, int){
 
 var stateSums = {};
 
-// function stateKeys(obj){
-//   stateSums[obj.state] = 0;
-// }
-
-// bankBalanceData.map(stateKeys);
-
 const stateKeys = bankBalanceData.map(function(obj){
   stateSums[obj.state] = 0;
 });
@@ -113,16 +107,8 @@ const stateAmounts = bankBalanceData.map(function(obj){
   stateSums[obj.state] += parseInt(obj.amount);
 })
 
-console.log(stateSums);
+// console.log(stateSums);
 
-
-
-
-
-
-// turn amount string into number.
-// consolidate amounts if states match.
-// 
 
 /*
   for all states *NOT* in the following states:
@@ -141,7 +127,64 @@ console.log(stateSums);
     round this number to the nearest dollar before moving on.
   )
  */
-var sumOfHighInterests = null;
+
+//var sumOfHighInterests = 0;
+
+//GET RID OF ACCOUNTS WITH NOT STATES
+
+const limitedStates = bankBalanceData.filter(function(obj){
+  if(
+    obj.state !== 'WI' &&
+    obj.state !== 'IL' &&
+    obj.state !== 'WY' &&
+    obj.state !== 'OH' &&
+    obj.state !== 'GA' &&
+    obj.state !== 'DE' ){
+
+      return true;
+    }
+});
+
+//GET STATE SUM FOR ACCOUNTS THEN INT RATES (18.9%)
+
+const limitedStateSum = {};
+
+const limitedStateKeys = limitedStates.map(function(obj){
+  limitedStateSum[obj.state] = 0;
+});
+
+const limitedStateAmounts = limitedStates.map(function(obj){
+  limitedStateSum[obj.state] += Math.round(parseInt(obj.amount*.189));
+})
+
+console.log('limitedStateSum:', limitedStateSum);
+
+const intAmountsOnly = (obj) => {
+  return Object.values(obj);
+};
+
+const arrOfIntAmountsOnly = (intAmountsOnly(limitedStateSum));
+
+console.log('arrOfIntAmountsOnly:', arrOfIntAmountsOnly);
+
+const moreThan50k = arrOfIntAmountsOnly.filter(function(int){
+  if(int > 50000){
+    return true;
+  }
+})
+
+console.log('moreThan50k:', moreThan50k);
+
+const sumOfHighInterests = moreThan50k.reduce(function(total,int){
+  return total + int;
+}, 0);
+
+console.log(sumOfHighInterests);
+
+
+
+
+
 
 /*
   set `lowerSumStates` to be an array of two letter state
