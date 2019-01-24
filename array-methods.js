@@ -50,18 +50,35 @@ const sumOfBankBalances = newArr.reduce((prev, curr) => {
  */
 
 
-var sumOfInterests = null;
+//var sumOfInterests = null;
 
-const subSetStates = bankBalanceData.filter((item) => {
-  if(bankBalanceData.state === 'WI' ||
-  bankBalanceData.state === 'IL' ||
-  bankBalanceData.state === 'WY' ||
-  bankBalanceData.state === 'OH' ||
-  bankBalanceData.state === 'GA' ||
-  bankBalanceData.state === 'DE'){
-    return true;
+const subSetStates = bankBalanceData.filter(function(item) {
+  if(
+  item.state === 'WI' ||
+  item.state === 'IL' ||
+  item.state === 'WY' ||
+  item.state === 'OH' ||
+  item.state === 'GA' ||
+  item.state === 'DE'){
+
+  return true;
+
   }
-}
+});
+
+const isolateAmountInt = subSetStates.map(function(item){
+  return Math.round(item.amount * .189);
+});
+
+const sumOfInterests = isolateAmountInt.reduce(function(total, int){
+  return total + int;
+}, 0);
+
+
+// console.log('subSetStates:',subSetStates);
+// console.log('isolateAmount:', isolateAmountInt);
+// console.log('sumOfInterests:', sumOfInterests);
+
 
 /*
   aggregate the sum of bankBalance amounts
@@ -80,6 +97,8 @@ const subSetStates = bankBalanceData.filter((item) => {
   )
  */
 var stateSums = null;
+
+
 
 /*
   for all states *NOT* in the following states:
