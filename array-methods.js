@@ -96,9 +96,33 @@ const sumOfInterests = isolateAmountInt.reduce(function(total, int){
     round this number to the nearest dollar before moving on.
   )
  */
-var stateSums = null;
+
+var stateSums = {};
+
+// function stateKeys(obj){
+//   stateSums[obj.state] = 0;
+// }
+
+// bankBalanceData.map(stateKeys);
+
+const stateKeys = bankBalanceData.map(function(obj){
+  stateSums[obj.state] = 0;
+});
+
+const stateAmounts = bankBalanceData.map(function(obj){
+  stateSums[obj.state] += parseInt(obj.amount);
+})
+
+console.log(stateSums);
 
 
+
+
+
+
+// turn amount string into number.
+// consolidate amounts if states match.
+// 
 
 /*
   for all states *NOT* in the following states:
